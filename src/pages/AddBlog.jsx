@@ -17,10 +17,16 @@ const AddBlog = () => {
   };
 
   const handleAddBlog = () => {
+    if (!title || !content || !image) {
+      alert('Please fill in all required fields!');
+      return; 
+    }
+
     const newBlog = { title, content, image };
     const storedBlogs = JSON.parse(localStorage.getItem('blogs')) || [];
     storedBlogs.push(newBlog);
     localStorage.setItem('blogs', JSON.stringify(storedBlogs));
+
     setTitle('');
     setContent('');
     setImage('');
@@ -35,21 +41,18 @@ const AddBlog = () => {
         placeholder="Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        required
         className="block w-full p-2 mb-2 border"
       />
       <textarea
         placeholder="Content"
         value={content}
         onChange={(e) => setContent(e.target.value)}
-        required
         className="block w-full p-2 mb-2 border"
       />
       <input
         type="file"
         accept="image/*"
         onChange={handleImageUpload}
-        required
         className="block w-full p-2 mb-2 border"
       />
       <button
